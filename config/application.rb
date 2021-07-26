@@ -16,11 +16,11 @@ module RailsApiVue2
       g.assets false
       g.helper false
       g.test_framework :rspec,
-        view_spec: false,
-        helper_spec: false,
-        controller_spec: false,
-        routing_spec: false,
-        request_spec: false
+                       view_spec: false,
+                       helper_spec: false,
+                       controller_spec: false,
+                       routing_spec: false,
+                       require_spec: false
     end
 
     # Configuration for the application, engines, and railties goes here.
