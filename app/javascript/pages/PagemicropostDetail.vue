@@ -10,13 +10,15 @@
               <v-list-item-subtitle style="white-space: pre-line" v-html="micropost.content"></v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
-              <v-list-item-action-text v-text="$dayjs(micropost.created_at).format('YYYY-MM-DD HH:mm:ss')"></v-list-item-action-text>
-              <v-btn icon @click="openEditMicropost">
-                  <v-icon color="green lighten-1">mdi-pen</v-icon>
+            <v-list-item-action-text v-text="$dayjs(micropost.created_at).format('YYYY-MM-DD HH:mm:ss')"></v-list-item-action-text>
+            <div class="d-flex">
+              <v-btn fab small dark color="teal" @click="openEditMicropost" class="mx-2">
+                <v-icon>mdi-pen</v-icon>
               </v-btn>
-              <v-btn icon @click="deleteMicropost">
-                  <v-icon color="error lighten-1">mdi-delete</v-icon>
+              <v-btn fab small dark color="error" @click="deleteMicropost" class="mx-2">
+                <v-icon>mdi-delete</v-icon>
               </v-btn>
+            </div>
           </v-list-item-action>
       </v-list-item>
       <v-divider
