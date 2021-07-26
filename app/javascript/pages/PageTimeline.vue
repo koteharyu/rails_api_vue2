@@ -1,15 +1,18 @@
 <template>
   <div>
-    <div class="mb-5">
+    <div class="mb-5" v-if="$store.getters['auth'/currentUser]">
       <micropost-form @created="createMicropost"></micropost-form>
     </div>
-    <timeline-list :microposts="microposts"></timeline-list>
+    <timeline-list v-if="isExistMicroposts" :microposts="microposts"></timeline-list>
+    <div class="text-center" v-else>
+      一件もありません
+    </div>
   </div>
 </template>
 
 <script>
-import MicropostForm from '@/components/MicropostForm'
-import TimelineList from '@/components/TimelineList'
+import MicropostForm from '../components/MicropostForm'
+import TimelineList from '../components/TimelineList'
 import axios from "axios";
 export default {
     data() {
@@ -19,7 +22,12 @@ export default {
     },
     components: {
         MicropostForm,
-        TimelineList
+        TimelineList,
+    },
+    computed: {
+      isExistMicroposts() {
+        return this.microposts.lenght > 0
+      },
     },
     created() {
         this.fetchMicroposts()
