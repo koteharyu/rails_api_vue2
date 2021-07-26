@@ -11,6 +11,8 @@ RSpec.describe "Api::Microposts", type: :request do
         include(
           'id' => micropost.id,
           'content' => micropost.content,
+          'created_at' => be_present,
+          'updated_at' => be_present,
           'user' => include('id' => micropost.user.id)
         )
       })
@@ -26,6 +28,8 @@ RSpec.describe "Api::Microposts", type: :request do
       expect(json['micropost']).to include({
         'id' => micropost.id,
         'content' => micropost.content,
+        'created_at' => be_present,
+        'updated_at' => be_present,
         'user' => include('id' => micropost.user.id)
       })
     end
@@ -44,6 +48,8 @@ RSpec.describe "Api::Microposts", type: :request do
         expect(json['micropost']).to include({
           'id' => be_present,
           'content' => 'hoge',
+          'created_at' => be_present,
+          'updated_at' => be_present,
           'user' => include('id' => user.id)
           })
         end
@@ -75,6 +81,8 @@ RSpec.describe "Api::Microposts", type: :request do
         expect(json['micropost']).to include({
           'id' => be_present,
           'content' => 'hoge hoge',
+          'created_at' => be_present,
+          'updated_at' => be_present,
           'user' => include('id' => user.id)
         })
       end
@@ -105,6 +113,8 @@ RSpec.describe "Api::Microposts", type: :request do
         expect(json['micropost']).to include({
           'id' => be_present,
           'content' => micropost.content,
+          'created_at' => be_present,
+          'updated_at' => be_present,
           'user' => include('id' => user.id)
         })
       end
