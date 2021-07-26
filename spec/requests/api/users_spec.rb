@@ -22,4 +22,19 @@ RSpec.describe "Api::UsersControllers", type: :request do
       expect(json['error']).to be_present
     end
   end
+
+  describe 'GET /api/users/:id' do
+    let(:user) { create(:user) }
+    it 'ユーザーの詳細情報を取得できること' do
+      get api_user_path(user)
+      expect(response).to have_http_status(200)
+      json = JSON.parse(response.body)
+      expect(json['user']).to include({
+        'id' => user.id,
+        'name' => user.name,
+        'email' => user.email,
+        'introduction' => user.introduction
+      })
+    end
+  end
 end
