@@ -32,6 +32,17 @@ RSpec.describe "Api::Microposts", type: :request do
                                                'user' => include('id' => user.id)
                                            })
     end
-  end
+
+    context 'ログインしていない場合' do
+      it '401エラーになること' do
+        post api_microposts_path, params: micropost_params
+        expect(response).to have_http_status(401)
+        json = JSON.parse(response.body)
+        expect(json['error']).to include({
+          'messages' => be_present
+          })
+        end
+      end
+    end
 
 end
