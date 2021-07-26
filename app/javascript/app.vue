@@ -39,8 +39,15 @@
     </v-app-bar>
 
     <v-main>
-      <router-view></router-view>
+      <v-container class="fill-height" fluid>
+        <v-row align="center" justify="center">
+          <v-col>
+            <router-view></router-view>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-main>
+    
     <v-footer color="indigo" app>
       <span class="white--text">&copy; 2019</span>
     </v-footer>
