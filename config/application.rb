@@ -20,7 +20,7 @@ module RailsApiVue2
         helper_spec: false,
         controller_spec: false,
         routing_spec: false,
-        request_spec: false
+        require_spec: false
     end
 
     # Configuration for the application, engines, and railties goes here.
