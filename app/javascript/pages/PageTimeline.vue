@@ -89,7 +89,7 @@ export default {
     },
     paging(page) {
       this.currentPage = page
-      this.fetchMicroposts(page);
+      this.fetchMicroposts();
       this.$vuetify.goTo(0);
     }
   },
