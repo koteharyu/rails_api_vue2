@@ -1,6 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :name, :email, :introduction, :avatar_url
-  has_many :tags
 
   def avatar_url
     if object.avatar.attached?
@@ -9,4 +8,6 @@ class UserSerializer < ActiveModel::Serializer
       'https://placehold.jp/300x300.png'
     end
   end
+
+  has_many :tags
 end
