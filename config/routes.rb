@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resource :session, only: [:create, :destroy]
     resources :microposts, only: [:index, :show, :create, :update, :destroy]
     namespace :me do
-      resource :accounts, only: [:update]
+      resource :account, only: [:update]
     end
   end
 end
