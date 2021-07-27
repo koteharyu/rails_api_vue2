@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col>
-        <div>
+        <div class="pb-10">
           <!-- vuex:authモジュールのgetters.currentUserで値が取得できたら -->
           <div class="mb-5" v-if="$store.getters['auth/currentUser']">
             <!-- MicropostForm.vue createMicropostメソッドの
@@ -16,11 +16,22 @@
           <timeline-list
             :microposts="microposts"
             v-if="isExistMicroposts"
+            class="mb-5"
           ></timeline-list>
           <!-- "isExistMicroposts"じゃない時はこっちを表示(v-else) -->
           <div class="text-center" v-else>
             一件もありません
           </div>
+          <template v-if="pagingMeta">
+            <div class="text-center">
+              <v-pagination
+                color="iindigo"
+                v-model="pagingMeta.current_page"
+                :length="pagingMeta.total_pages"
+                @input="paging"
+              ></v-pagination>
+            </div>
+          </template>
         </div>
       </v-col>
     </v-row>
@@ -34,6 +45,8 @@ export default {
   data() {
     return {
       microposts: [],
+      pagingMeta: null,
+      currentPage: 1,
     };
   },
   components: {
@@ -52,10 +65,11 @@ export default {
   methods: {
     // https://qiita.com/soarflat/items/1a9613e023200bbebcb3#await%E3%81%A8%E3%81%AF
     async fetchMicroposts() {
-      const res = await axios.get(`/api/microposts`);
+      const res = await axios.get(`/api/microposts`, { params: { page: this.currentPage } });
       // await の結果を待ってから
       this.microposts = res.data.microposts;
       // を実行する
+      this.pagingMeta = res.data.meta
     },
     async createMicropost(micropostContent) {
       // データ成形の定義
@@ -73,6 +87,11 @@ export default {
       // スプレッド演算子による配列連結
       // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Spread_syntax
     },
+    paging(page) {
+      this.currentPage = page
+      this.fetchMicroposts();
+      this.$vuetify.goTo(0);
+    }
   },
 };
 </script>
