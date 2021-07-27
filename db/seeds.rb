@@ -18,3 +18,10 @@ require 'faker'
     password_confirmation: pass
   )
 end
+
+User.create!(name: "seed", email: "seed@examle.com", password: "password", password_confirmation: "password")
+
+100.times do |i|
+  seed = User.find_by(name: "seed")
+  seed.microposts.create!(content: "this is seed post no.#{i}")
+end
