@@ -16,8 +16,8 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def render_404
-    render json: { error: { messages: exception.message } }, status: not_found
+  def render_404(exception)
+    render json: { error: { messages: exception.message } }, status: :not_found
   end
 
   def render_422(exception)

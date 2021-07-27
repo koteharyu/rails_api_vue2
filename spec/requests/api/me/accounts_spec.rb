@@ -7,7 +7,7 @@ RSpec.describe "Api::Me::Accounts", type: :request do
     let(:headers) { { Authorization: "Bearer #{token}" } }
     let(:user_params) { { user: { name: "update_name", introduction: "update_introduction", avatar: fixture_file_upload(Rails.root.join('spec', 'fixtures', 'test.png'))} } }
     it 'プロフィールが更新できること' do
-      patch api_me_accounts_path, params: user_params, headers: headers
+      patch api_me_account_path, params: user_params, headers: headers
       expect(response).to have_http_status(200)
       json = JSON.parse(response.body)
       expect(json['user']).to include({

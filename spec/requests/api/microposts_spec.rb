@@ -2,20 +2,37 @@ require 'rails_helper'
 
 RSpec.describe "Api::Microposts", type: :request do
   describe 'GET /api/microposts' do
-    let!(:microposts) { create_list(:micropost, 5) }
-    it 'マイクロポスtの一覧が取得できること' do
-      get api_microposts_path
-      expect(response).to have_http_status(200)
-      json = JSON.parse(response.body)
-      expect(json['microposts']).to match_array(microposts.map { |micropost|
-        include(
-          'id' => micropost.id,
-          'content' => micropost.content,
-          'created_at' => be_present,
-          'updated_at' => be_present,
-          'user' => include('id' => micropost.user.id)
+    context 'ページングなし' do
+      let!(:microposts) { create_list(:micropost, 5) }
+      it 'マイクロポストの一覧が取得できること' do
+        get api_microposts_path
+        expect(response).to have_http_status(200)
+        json = JSON.parse(response.body)
+        expect(json['microposts']).to match_array(microposts.map { |micropost|
+          include(
+            'id' => micropost.id,
+            'content' => micropost.content,
+            'created_at' => be_present,
+            'updated_at' => be_present,
+            'user' => include(
+              'id' => micropost.user.id
+            )
+          )})
+      end
+    end
+
+    context 'ページングあり' do
+      let!(:microposts) { create_list(:micropost, 21) }
+      it 'マイクロポストの一覧が取得できること(pagination)' do
+        get api_microposts_path
+        expect(response).to have_http_status(200)
+        json = JSON.parse(response.body)
+        expect(json['meta']).to include(
+          'total_pages' => 3,
+          'total_count' => 21,
+          'current_page' => 1
         )
-      })
+      end
     end
   end
 
@@ -43,7 +60,7 @@ RSpec.describe "Api::Microposts", type: :request do
     context 'ログイン済の場合' do
       it '投稿が作成できること' do
         post api_microposts_path, params: micropost_params, headers: headers
-        expect(response).to have_http_status(201)
+        expect(response).to have_http_status(200)
         json = JSON.parse(response.body)
         expect(json['micropost']).to include({
           'id' => be_present,
