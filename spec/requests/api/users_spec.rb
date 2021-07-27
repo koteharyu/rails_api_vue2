@@ -11,7 +11,8 @@ RSpec.describe "Api::UsersControllers", type: :request do
         expect(json['users']).to match_array(users.map { |user|
           include(
             'id' => user.id,
-            'name' => user.name
+            'name' => user.name,
+            'tags' => be_a(Array)
           )
         })
       end

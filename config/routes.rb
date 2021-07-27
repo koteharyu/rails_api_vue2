@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :create, :show]
     resource :session, only: [:create, :destroy]
     resources :microposts, only: [:index, :show, :create, :update, :destroy]
+    resources :tags, only: [:index]
     namespace :me do
       resource :account, only: [:update]
     end
