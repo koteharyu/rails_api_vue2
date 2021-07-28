@@ -102,9 +102,9 @@
             }
         },
         watch: {
-          model (val) {
+          selevtedTags (val) {
             if (val.length > 5) {
-              this.$nextTick(() => this.model.pop())
+              this.$nextTick(() => this.selevtedTags.pop())
             }
           }
         }
