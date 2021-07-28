@@ -63,7 +63,6 @@
     <v-footer
             color="indigo"
             app
-            class="mt-5"
     >
       <span class="white--text">&copy; 2019</span>
     </v-footer>
