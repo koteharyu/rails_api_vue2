@@ -25,10 +25,10 @@
           <template v-if="pagingMeta">
             <div class="text-center">
               <v-pagination
-                color="iindigo"
+                color="indigo"
                 v-model="pagingMeta.current_page"
                 :length="pagingMeta.total_pages"
-                @input="paging"
+                @click="paging"
               ></v-pagination>
             </div>
           </template>
