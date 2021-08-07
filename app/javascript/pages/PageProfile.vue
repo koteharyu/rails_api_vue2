@@ -75,8 +75,25 @@
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
+
+            <v-devider inset></v-devider>
+
+            <v-list-item>
+              <v-list-item-title>
+                <v-chip
+                  class="ma-1"
+                  color="orange"
+                  text-color="white"
+                  small
+                  v-for="tag in tags"
+                  :key="tag.name"
+                >
+                  <v-icon left class="mr-0">mdi-music-accidental-sharpe</v-icon>
+                </v-chip>
+              </v-list-item-title>
+            </v-list-item>
           </v-list>
-          <profile-edit-modal ref="dialog"></profile-edit-modal>
+          <profile-edit-modal v-if="isMe" ref="dialog"></profile-edit-modal>
         </v-card>
       </v-col>
     </v-row>

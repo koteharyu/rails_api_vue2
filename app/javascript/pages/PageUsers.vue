@@ -88,7 +88,7 @@
     </v-row>
     <v-row justify="center">
       <template v-if="pagingMeta">
-        <div class="text-center">
+        <div class="text-center pb-10">
           <v-pagination
                   color="indigo"
                   v-model="pagingMeta.current_page"

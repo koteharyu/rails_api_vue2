@@ -14,6 +14,36 @@
               <v-col cols="12">
                 <v-textarea label="Introduction" v-model="user.introduction"></v-textarea>
               </v-col>
+
+              <v-col cols="12">
+                <template>
+                  <v-container fluid>
+                    <v-combobox
+                      v-model="selectedTags"
+                      :items="tags"
+                      :search-inpput.sync="search"
+                      hide-selected
+                      hint="最大５つまで登録できます"
+                      label="Add some tags"
+                      multiple
+                      persistent-hint
+                      small-chips
+                      :clearable="true"
+                      :deletable-chips="true"
+                    >
+                      <template v-slot:no-data>
+                        <v-list-item>
+                          <v-lite-item-content>
+                            <v-list-item-title>
+                              タグ"<strong>{{ search }}</strong>"はまだ登録されていません。<kbd>enter</kbd>で登録できます。
+                            </v-list-item-title>
+                          </v-lite-item-content>
+                        </v-list-item>
+                      </template>
+                    </v-combobox>
+                  </v-container>
+                </template>
+              </v-col>
             </v-row>
           </v-container>
         </v-card-text>
@@ -33,11 +63,18 @@
         data() {
             return {
                 dialog: false,
-                user: null
+                user: null,
+                selectedTags: [],
+                search: null,
+                tags: [],
             }
         },
         created() {
             this.user = { ...this.$store.getters['auth/currentUser']}
+            this.selectedTags = this.user.tags.map((tag) => {
+              return tag.name
+            })
+            this.fetchTags()
         },
         methods: {
             open() {
@@ -50,12 +87,26 @@
                 const userParams = {
                     user: {
                         name: this.user.name,
-                        introduction: this.user.introduction
+                        introduction: this.user.introduction,
+                        tag_names: this.selectedTags,
                     }
                 }
                 await this.$store.dispatch('auth/updateProfile', userParams)
                 this.close()
+            },
+            async fetchTags() {
+              const res = await axios.get(`/api/tags`)
+              this.tags = res.data.tags.map((tag) => {
+                return tag.name
+              })
             }
+        },
+        watch: {
+          selevtedTags (val) {
+            if (val.length > 5) {
+              this.$nextTick(() => this.selevtedTags.pop())
+            }
+          }
         }
     }
 </script>
